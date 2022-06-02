@@ -68,7 +68,7 @@ def demo5():
     Fire(demo5_main)
 
 
-def demo6_main():
+def demo6_main(path:str):
     import itertools
 
     patterns = [
@@ -81,7 +81,8 @@ def demo6_main():
 
 #    path = Path("d:/Pictures")
 #    path = Path("C:/Users/tatei/Documents/temp")
-    path = Path("//fs1/photo")
+#    path = Path("//fs1/photo")
+    path = Path(path)
     items_iter = (path.rglob(pattern) for pattern in patterns)
     for i, item in enumerate(itertools.chain.from_iterable(items_iter)):
         if item.is_dir():
