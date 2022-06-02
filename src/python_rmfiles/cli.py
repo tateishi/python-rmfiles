@@ -66,3 +66,31 @@ def demo5_main():
 
 def demo5():
     Fire(demo5_main)
+
+
+def demo6_main():
+    import itertools
+
+    patterns = [
+        "Thumbs.db",
+        ".webaxs",
+        "._.DS_Store",
+        "Picasa.ini",
+        "._.Trashes",
+    ]
+
+#    path = Path("d:/Pictures")
+#    path = Path("C:/Users/tatei/Documents/temp")
+    path = Path("//fs1/photo")
+    items_iter = (path.rglob(pattern) for pattern in patterns)
+    for i, item in enumerate(itertools.chain.from_iterable(items_iter)):
+        if item.is_dir():
+            print(f"DIR {i:5} = {item}")
+            shutil.rmtree(item)
+        elif item.is_file():
+            print(f"FILE{i:5} = {item}")
+            item.unlink()
+
+
+def demo6():
+    Fire(demo6_main)
