@@ -51,37 +51,35 @@ def demo4():
     Fire(demo4_main)
 
 
-def demo5_main():
-    path = TMP_DIR
-    items = list(path.rglob("*.pdf"))
-    print(f"*.pdf = {items}")
-    for i, item in enumerate(items):
+patterns = [
+    "Thumbs.db",
+    ".webaxs",
+    "._.DS_Store",
+    "Picasa.ini",
+    ".picasa.ini",
+    "._.Trashes",
+]
+
+
+def demo5_main(path: str):
+    import itertools
+
+    path = Path(path)
+    items_iter = (path.rglob(pattern) for pattern in patterns)
+    for i, item in enumerate(itertools.chain.from_iterable(items_iter)):
         if item.is_dir():
             print(i, "D", item)
-            shutil.rmtree(item)
         elif item.is_file():
             print(i, "F", item)
-            item.unlink()
 
 
 def demo5():
     Fire(demo5_main)
 
 
-def demo6_main(path:str):
+def demo6_main(path: str):
     import itertools
 
-    patterns = [
-        "Thumbs.db",
-        ".webaxs",
-        "._.DS_Store",
-        "Picasa.ini",
-        "._.Trashes",
-    ]
-
-#    path = Path("d:/Pictures")
-#    path = Path("C:/Users/tatei/Documents/temp")
-#    path = Path("//fs1/photo")
     path = Path(path)
     items_iter = (path.rglob(pattern) for pattern in patterns)
     for i, item in enumerate(itertools.chain.from_iterable(items_iter)):
